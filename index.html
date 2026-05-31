@@ -1,466 +1,1041 @@
-html = r'''<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>New Hire Laptop Setup</title>
-  <style>
-    :root {
-      --blue: #2563eb;
-      --dark: #0f172a;
-      --light: #f8fafc;
-      --card: #ffffff;
-      --border: #e2e8f0;
-      --green: #16a34a;
-      --amber: #f59e0b;
-      --text: #334155;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome to Bupa — IT Setup Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --brand: #1a1a2e;
+  --accent: #4f8ef7;
+  --accent-dark: #2563eb;
+  --green: #10b981;
+  --green-light: #d1fae5;
+  --amber: #f59e0b;
+  --amber-light: #fef3c7;
+  --red: #ef4444;
+  --red-light: #fee2e2;
+  --bg: #f4f6fb;
+  --surface: #ffffff;
+  --border: #e2e8f0;
+  --text: #1a1a2e;
+  --muted: #64748b;
+  --radius: 14px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+/* ── LAYOUT ── */
+.shell {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 1.25rem 5rem;
+}
 
-    body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      background: var(--light);
-      color: var(--text);
-      line-height: 1.6;
-    }
+/* ── TOP BAR ── */
+.topbar {
+  background: var(--brand);
+  padding: 0 1.25rem;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+.topbar-inner {
+  max-width: 680px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  gap: 1rem;
+}
+.bupa-logo {
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+  letter-spacing: -0.01em;
+  flex-shrink: 0;
+}
+.bupa-logo span { color: #4f8ef7; }
+.progress-bar-wrap {
+  flex: 1;
+  background: rgba(255,255,255,0.15);
+  border-radius: 100px;
+  height: 6px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: var(--green);
+  border-radius: 100px;
+  transition: width 0.4s ease;
+}
+.progress-label {
+  color: rgba(255,255,255,0.7);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-family: 'DM Mono', monospace;
+}
 
-    header {
-      background: linear-gradient(135deg, #0f172a, #1e3a8a);
-      color: white;
-      padding: 48px 20px;
-      text-align: center;
-    }
+/* ── HERO ── */
+.hero {
+  background: var(--brand);
+  color: white;
+  padding: 2.5rem 1.25rem 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  background: rgba(79,142,247,0.12);
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: -40px;
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  background: rgba(16,185,129,0.1);
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(79,142,247,0.2);
+  color: #93c5fd;
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 100px;
+  margin-bottom: 0.75rem;
+  border: 1px solid rgba(79,142,247,0.3);
+}
+.hero h1 {
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+.hero p {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.6);
+  max-width: 380px;
+  margin: 0 auto 1.25rem;
+}
+.time-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.8);
+  font-size: 12.5px;
+  padding: 5px 14px;
+  border-radius: 100px;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.time-pill svg { width: 13px; height: 13px; opacity: 0.7; }
 
-    header h1 {
-      font-size: clamp(2rem, 5vw, 4rem);
-      margin-bottom: 12px;
-    }
+/* ── STEP DOTS NAV ── */
+.dots-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 1.5rem 0 2rem;
+  flex-wrap: wrap;
+}
+.dot-step {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: all 0.3s;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+.dot-step.done { background: var(--green); }
+.dot-step.active { background: var(--accent); width: 28px; border-radius: 6px; }
+.dot-step.stuck { background: var(--amber); }
 
-    header p {
-      font-size: 1.1rem;
-      max-width: 720px;
-      margin: auto;
-      opacity: 0.95;
-    }
+/* ── STEP CARD ── */
+.step-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  display: none;
+  animation: fadeUp 0.3s ease;
+}
+.step-card.active { display: block; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.step-card-head {
+  padding: 1.5rem 1.5rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.step-num-badge {
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  background: var(--brand);
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 600;
+  font-family: 'DM Mono', monospace;
+}
+.step-num-badge.done-badge { background: var(--green); }
+.step-num-badge.stuck-badge { background: var(--amber); }
+.step-head-text h2 {
+  font-size: 1.1rem; font-weight: 600;
+  margin-bottom: 2px;
+}
+.step-head-text p { font-size: 13px; color: var(--muted); }
+.step-status-pill {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: 11.5px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 100px;
+  display: none;
+}
+.step-status-pill.show { display: inline-block; }
+.pill-done { background: var(--green-light); color: #065f46; }
+.pill-stuck { background: var(--amber-light); color: #92400e; }
 
-    .time {
-      margin-top: 20px;
-      display: inline-block;
-      background: rgba(255,255,255,0.12);
-      padding: 10px 18px;
-      border-radius: 999px;
-      font-weight: 600;
-    }
+.step-body-content {
+  padding: 1.5rem;
+}
 
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: white;
-      border-bottom: 1px solid var(--border);
-      padding: 12px;
-      overflow-x: auto;
-      white-space: nowrap;
-    }
+/* ── INNER CONTENT ── */
+.kb-table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-top: 0.75rem; }
+.kb-table th { text-align: left; font-weight: 500; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); padding: 6px 10px; border-bottom: 1px solid var(--border); }
+.kb-table td { padding: 8px 10px; border-bottom: 1px solid #f3f4f6; vertical-align: middle; }
+.kb-table tr:last-child td { border-bottom: none; }
+.key { display: inline-block; background: #f1f5f9; border: 1px solid #cbd5e1; border-bottom: 2px solid #94a3b8; border-radius: 5px; padding: 2px 8px; font-family: 'DM Mono', monospace; font-size: 12px; color: #334155; }
+.char-big { font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 500; color: var(--accent); }
 
-    nav a {
-      display: inline-block;
-      margin: 4px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      color: var(--dark);
-      text-decoration: none;
-      background: #f1f5f9;
-      font-size: 0.9rem;
-    }
+.warn-box { background: var(--amber-light); border: 1px solid var(--amber); border-radius: 10px; padding: 12px 14px; font-size: 13px; color: #92400e; margin-top: 1rem; display: flex; gap: 8px; align-items: flex-start; }
+.warn-box svg { flex-shrink: 0; width: 16px; height: 16px; margin-top: 2px; }
 
-    nav a:hover {
-      background: #dbeafe;
-      color: var(--blue);
-    }
+.req-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 1rem 0 0; }
+.req-item { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+.req-item .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
 
-    main {
-      max-width: 1100px;
-      margin: 32px auto;
-      padding: 0 16px;
-    }
+.avoid-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 0.75rem; }
+.avoid-tag { background: #fef2f2; color: var(--red); border: 1px solid #fecaca; border-radius: 6px; padding: 3px 10px; font-size: 12px; font-weight: 500; }
 
-    .section {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 24px;
-      margin-bottom: 22px;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
-    }
+.num-steps { list-style: none; counter-reset: ns; margin-top: 0.75rem; }
+.num-steps li { counter-increment: ns; display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f3f4f6; font-size: 13.5px; align-items: flex-start; }
+.num-steps li:last-child { border-bottom: none; }
+.num-steps li::before { content: counter(ns); flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #f0f4ff; color: var(--accent); font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; margin-top: 1px; font-family: 'DM Mono', monospace; }
+.num-steps li strong { color: var(--text); font-weight: 500; }
 
-    .section h2 {
-      color: var(--dark);
-      margin-bottom: 14px;
-      font-size: 1.5rem;
-    }
+.link-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 1rem; background: var(--accent); color: white; text-decoration: none; font-size: 13px; font-weight: 500; padding: 9px 18px; border-radius: 8px; transition: opacity 0.2s; }
+.link-btn:hover { opacity: 0.88; }
+.link-btn svg { width: 14px; height: 14px; }
 
-    .step {
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-      margin: 14px 0;
-    }
+.app-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+.app-card { border: 1px solid var(--border); border-radius: 12px; padding: 14px; }
+.app-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 10px; }
+.app-card h4 { font-size: 13.5px; font-weight: 600; margin-bottom: 6px; }
+.app-checklist { list-style: none; }
+.app-checklist li { font-size: 12.5px; color: var(--muted); padding: 3px 0; display: flex; gap: 6px; }
+.app-checklist li::before { content: '›'; color: var(--green); font-weight: 700; flex-shrink: 0; }
 
-    .num {
-      min-width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: var(--blue);
-      color: white;
-      display: grid;
-      place-items: center;
-      font-weight: 700;
-    }
+/* ── FOOTER ACTIONS ── */
+.step-footer {
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fafbfd;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s;
+}
+.btn-primary { background: var(--brand); color: white; }
+.btn-primary:hover { background: #2d2d4e; }
+.btn-back { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+.btn-back:hover { background: var(--bg); }
+.btn-stuck { background: transparent; color: var(--amber); border: 1px solid #fcd34d; margin-left: auto; font-size: 13px; padding: 8px 14px; }
+.btn-stuck:hover { background: var(--amber-light); }
+.btn-done { background: var(--green); color: white; }
+.btn-done:hover { background: #059669; }
+.btn svg { width: 16px; height: 16px; }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 16px;
-      margin-top: 16px;
-    }
+/* ── STUCK PANEL ── */
+.stuck-panel {
+  display: none;
+  background: var(--amber-light);
+  border: 1px solid #fcd34d;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  margin-top: 1rem;
+}
+.stuck-panel.open { display: block; animation: fadeUp 0.2s ease; }
+.stuck-panel h4 { font-size: 14px; font-weight: 600; color: #92400e; margin-bottom: 6px; }
+.stuck-panel p { font-size: 13px; color: #92400e; }
+.stuck-panel .stuck-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.btn-resolve { background: #92400e; color: white; font-size: 13px; padding: 8px 14px; border-radius: 8px; }
+.btn-resolve:hover { background: #7c3209; }
+.btn-unstuck { background: white; color: #92400e; border: 1px solid #fcd34d; font-size: 13px; padding: 8px 14px; border-radius: 8px; }
+.btn-unstuck:hover { background: #fffbeb; }
 
-    .mini-card {
-      border: 1px solid var(--border);
-      background: #f8fafc;
-      border-radius: 16px;
-      padding: 16px;
-    }
+/* ── SUMMARY BAR ── */
+.summary-bar {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.summary-stat { text-align: center; flex: 1; min-width: 60px; }
+.summary-stat .stat-num { font-size: 1.4rem; font-weight: 600; font-family: 'DM Mono', monospace; }
+.summary-stat .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.stat-done .stat-num { color: var(--green); }
+.stat-stuck .stat-num { color: var(--amber); }
+.stat-left .stat-num { color: var(--accent); }
+.summary-divider { width: 1px; height: 36px; background: var(--border); }
 
-    .mini-card h3 {
-      color: var(--dark);
-      margin-bottom: 8px;
-    }
+/* ── COMPLETION SCREEN ── */
+.completion-screen {
+  display: none;
+  text-align: center;
+  padding: 3rem 1.5rem;
+  animation: fadeUp 0.4s ease;
+}
+.completion-screen.show { display: block; }
+.completion-icon {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: var(--green-light);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.25rem;
+}
+.completion-icon svg { width: 36px; height: 36px; stroke: var(--green); }
+.completion-screen h2 { font-size: 1.5rem; font-weight: 600; margin-bottom: 8px; }
+.completion-screen p { font-size: 14px; color: var(--muted); max-width: 340px; margin: 0 auto 1.5rem; }
+.completion-steps-review {
+  background: var(--bg);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1.5rem;
+  text-align: left;
+}
+.review-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13.5px;
+}
+.review-item:last-child { border-bottom: none; }
+.review-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.review-dot.done { background: var(--green); }
+.review-dot.stuck { background: var(--amber); }
+.review-status { margin-left: auto; font-size: 12px; font-weight: 500; }
+.status-done { color: var(--green); }
+.status-stuck { color: var(--amber); }
 
-    ul {
-      padding-left: 20px;
-      margin-top: 8px;
-    }
+/* ── HELP CARD ── */
+.help-card {
+  background: linear-gradient(135deg, #f0f4ff 0%, #e8f5ff 100%);
+  border: 1px solid #c7d9ff;
+  border-radius: 14px;
+  padding: 1.75rem;
+  text-align: center;
+}
+.help-card .help-icon { font-size: 2.2rem; margin-bottom: 0.75rem; }
+.help-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 8px; }
+.help-card p { font-size: 13.5px; color: var(--muted); max-width: 360px; margin: 0 auto; }
 
-    .alert {
-      border-left: 5px solid var(--amber);
-      background: #fffbeb;
-      padding: 14px 16px;
-      border-radius: 12px;
-      margin-top: 14px;
-    }
+/* ── RESTART ── */
+.btn-restart { background: var(--bg); color: var(--muted); border: 1px solid var(--border); font-size: 13px; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
+.btn-restart:hover { background: var(--border); }
 
-    .success {
-      border-left: 5px solid var(--green);
-      background: #ecfdf5;
-      padding: 14px 16px;
-      border-radius: 12px;
-      margin-top: 14px;
-    }
-
-    code {
-      background: #eef2ff;
-      color: #1e3a8a;
-      padding: 3px 7px;
-      border-radius: 6px;
-      font-weight: 600;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 12px;
-      overflow: hidden;
-      border-radius: 12px;
-    }
-
-    th, td {
-      border: 1px solid var(--border);
-      padding: 12px;
-      text-align: left;
-    }
-
-    th {
-      background: #eff6ff;
-      color: var(--dark);
-    }
-
-    .footer {
-      text-align: center;
-      padding: 32px 16px;
-      color: #64748b;
-    }
-
-    .button {
-      display: inline-block;
-      margin-top: 12px;
-      background: var(--blue);
-      color: white;
-      text-decoration: none;
-      padding: 12px 18px;
-      border-radius: 12px;
-      font-weight: 700;
-    }
-
-    @media (max-width: 640px) {
-      .section {
-        padding: 18px;
-      }
-
-      .step {
-        flex-direction: column;
-      }
-
-      table {
-        font-size: 0.9rem;
-      }
-    }
-  </style>
+@media (max-width: 560px) {
+  .shell { padding: 0 0.75rem 6rem; }
+  .hero { padding: 2rem 1rem 2.5rem; }
+  .hero h1 { font-size: 1.7rem; }
+  .hero p { font-size: 0.9rem; }
+  .summary-bar { padding: 0.75rem 1rem; gap: 0.5rem; }
+  .summary-divider { display: none; }
+  .summary-stat .stat-num { font-size: 1.2rem; }
+  .step-card-head { padding: 1.1rem 1rem 1rem; gap: 0.75rem; }
+  .step-head-text h2 { font-size: 1rem; }
+  .step-body-content { padding: 1rem; }
+  .step-footer { padding: 0.9rem 1rem; flex-wrap: wrap; gap: 8px; }
+  .btn-back { order: 1; flex: 0 0 auto; }
+  .btn-stuck { order: 3; flex: 1 1 100%; margin-left: 0; justify-content: center; }
+  .btn-primary, .btn-done { order: 2; flex: 1 1 auto; margin-left: auto; justify-content: center; }
+  .btn { padding: 11px 16px; font-size: 14px; min-height: 44px; }
+  .btn-stuck { padding: 10px 16px; min-height: 44px; }
+  .req-grid { grid-template-columns: 1fr; }
+  .app-grid { grid-template-columns: 1fr; }
+  .kb-table { font-size: 12.5px; }
+  .kb-table th, .kb-table td { padding: 6px; }
+  .key { padding: 2px 5px; font-size: 11px; }
+  .stuck-panel { padding: 1rem; }
+  .stuck-panel .stuck-actions { flex-direction: column; }
+  .btn-resolve, .btn-unstuck { width: 100%; text-align: center; min-height: 44px; }
+  .dots-nav { gap: 5px; margin: 1rem 0 1.25rem; }
+  .completion-screen { padding: 2rem 0.5rem; }
+  .completion-steps-review { padding: 0.75rem; }
+  .review-item { font-size: 13px; }
+  .bupa-logo { font-size: 16px; }
+  .progress-label { font-size: 11px; }
+}
+</style>
 </head>
-
 <body>
-  <header>
-    <h1>Welcome to the Team 👋</h1>
-    <p>
-      Please follow this guide to set up your company laptop, sign in for the first time,
-      secure your account, and check your Microsoft 365 applications.
-    </p>
-    <div class="time">Estimated setup time: 10–15 minutes</div>
-  </header>
 
-  <nav>
-    <a href="#login">First Login</a>
-    <a href="#password">Password</a>
-    <a href="#mfa">MFA</a>
-    <a href="#apps">Apps</a>
-    <a href="#updates">Updates</a>
-    <a href="#keyboard">Keyboard</a>
-    <a href="#timezone">Time Zone</a>
-    <a href="#help">Help</a>
-  </nav>
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="bupa-logo">bupa<span>.</span></div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+    </div>
+    <div class="progress-label" id="progressLabel">0 / 7</div>
+  </div>
+</div>
 
-  <main>
-    <section id="login" class="section">
-      <h2>1. First Login</h2>
-      <p>Use the username and temporary password provided on the laptop sticker.</p>
+<!-- HERO (shown only before starting) -->
+<div class="hero" id="heroSection">
+  <div class="hero-badge">IT Onboarding · Cairo</div>
+  <h1>Welcome to Bupa 👋</h1>
+  <p>Get your laptop ready in under 15 minutes. Follow each step and confirm as you go.</p>
+  <div class="time-pill">
+    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    Estimated time: 10–15 minutes
+  </div>
+</div>
 
-      <div class="alert">
-        <strong>Important:</strong> Before typing your password, make sure you are using the correct keyboard layout.
-        Special characters such as <code>@</code> and <code>#</code> may be different on UK and US keyboards.
+<div class="shell">
+
+  <!-- SUMMARY BAR -->
+  <div class="summary-bar" id="summaryBar" style="display:none">
+    <div class="summary-stat stat-done">
+      <div class="stat-num" id="statDone">0</div>
+      <div class="stat-label">Done</div>
+    </div>
+    <div class="summary-divider"></div>
+    <div class="summary-stat stat-stuck">
+      <div class="stat-num" id="statStuck">0</div>
+      <div class="stat-label">Stuck</div>
+    </div>
+    <div class="summary-divider"></div>
+    <div class="summary-stat stat-left">
+      <div class="stat-num" id="statLeft">7</div>
+      <div class="stat-label">Remaining</div>
+    </div>
+  </div>
+
+  <!-- STEP DOTS -->
+  <div class="dots-nav" id="dotsNav"></div>
+
+  <!-- ═══════════════════════════════════
+       STEP CARDS
+  ═══════════════════════════════════ -->
+
+  <!-- STEP 1: First Login -->
+  <div class="step-card" id="step-0">
+    <div class="step-card-head">
+      <div class="step-num-badge" id="badge-0">01</div>
+      <div class="step-head-text">
+        <h2>First Login</h2>
+        <p>Use the credentials on your laptop sticker</p>
       </div>
-
-      <table>
-        <tr>
-          <th>Character</th>
-          <th>UK Keyboard</th>
-          <th>US Keyboard</th>
-        </tr>
-        <tr>
-          <td>@</td>
-          <td>Shift + '</td>
-          <td>Shift + 2</td>
-        </tr>
-        <tr>
-          <td>#</td>
-          <td>Key near Enter</td>
-          <td>Shift + 3</td>
-        </tr>
+      <span class="step-status-pill" id="pill-0"></span>
+    </div>
+    <div class="step-body-content">
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1rem;">Before typing your password, make sure you're on the correct keyboard layout. Special characters behave differently on UK vs US keyboards.</p>
+      <table class="kb-table">
+        <thead><tr><th>Character</th><th>UK Keyboard</th><th>US Keyboard</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="char-big">@</span></td>
+            <td><span class="key">Shift</span> + <span class="key">'</span></td>
+            <td><span class="key">Shift</span> + <span class="key">2</span></td>
+          </tr>
+          <tr>
+            <td><span class="char-big">#</span></td>
+            <td><span class="key">key near Enter</span></td>
+            <td><span class="key">Shift</span> + <span class="key">3</span></td>
+          </tr>
+        </tbody>
       </table>
-    </section>
-
-    <section id="password" class="section">
-      <h2>2. Change Your Password</h2>
-      <p>After your first login, you will be asked to create a new password.</p>
-
-      <div class="grid">
-        <div class="mini-card">
-          <h3>Password Requirements</h3>
-          <ul>
-            <li>At least 12 characters</li>
-            <li>Uppercase letter</li>
-            <li>Lowercase letter</li>
-            <li>Number</li>
-            <li>Special character</li>
-          </ul>
-        </div>
-
-        <div class="mini-card">
-          <h3>Avoid Using</h3>
-          <ul>
-            <li>Your first name</li>
-            <li>Your surname</li>
-            <li>Company name</li>
-            <li>Common words</li>
-          </ul>
+      <div class="warn-box" style="margin-top:1rem;">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Use the username and temporary password printed on the sticker attached to your laptop.
+      </div>
+      <div class="stuck-panel" id="stuck-0">
+        <h4>🔒 Stuck on First Login?</h4>
+        <p>Common issues: wrong keyboard layout, caps lock on, or sticker hard to read. Do <strong>not</strong> retry more than 3 times — your account may lock.</p>
+        <div class="stuck-actions">
+          <button class="btn btn-resolve" onclick="contactIT(0)">Contact IT Service Desk</button>
+          <button class="btn btn-unstuck" onclick="unstuck(0)">I sorted it out</button>
         </div>
       </div>
+    </div>
+    <div class="step-footer">
+      <button class="btn btn-stuck" onclick="toggleStuck(0)">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        I'm stuck
+      </button>
+      <button class="btn btn-primary" onclick="markDone(0)" style="margin-left:auto">
+        Logged in ✓
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </div>
 
-      <div class="alert">
-        If your new password contains <code>@</code> or <code>#</code>, confirm the correct keyboard layout before saving it.
-        This helps avoid future login failures or account lockouts.
+  <!-- STEP 2: Password -->
+  <div class="step-card" id="step-1">
+    <div class="step-card-head">
+      <div class="step-num-badge" id="badge-1">02</div>
+      <div class="step-head-text">
+        <h2>Change Your Password</h2>
+        <p>You'll be prompted right after first login</p>
       </div>
-    </section>
-
-    <section id="mfa" class="section">
-      <h2>3. Set Up Multi-Factor Authentication (MFA)</h2>
-      <p>Before starting, install the <strong>Microsoft Authenticator</strong> app on your mobile phone.</p>
-
-      <div class="step">
-        <div class="num">1</div>
-        <div>Open <code>https://mysignins.microsoft.com/security-info</code></div>
+      <span class="step-status-pill" id="pill-1"></span>
+    </div>
+    <div class="step-body-content">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:4px;">Your new password must include:</p>
+      <div class="req-grid">
+        <div class="req-item"><span class="dot"></span> At least 12 characters</div>
+        <div class="req-item"><span class="dot"></span> Uppercase letter (A–Z)</div>
+        <div class="req-item"><span class="dot"></span> Lowercase letter (a–z)</div>
+        <div class="req-item"><span class="dot"></span> A number (0–9)</div>
+        <div class="req-item"><span class="dot"></span> A special character</div>
       </div>
-
-      <div class="step">
-        <div class="num">2</div>
-        <div>Sign in using your company email and your new password.</div>
+      <p style="font-size:13px;color:var(--muted);margin:1rem 0 4px;">Avoid using:</p>
+      <div class="avoid-list">
+        <span class="avoid-tag">Your first name</span>
+        <span class="avoid-tag">Your surname</span>
+        <span class="avoid-tag">Company name</span>
+        <span class="avoid-tag">Common words</span>
       </div>
-
-      <div class="step">
-        <div class="num">3</div>
-        <div>Click <strong>Add sign-in method</strong>.</div>
+      <div class="warn-box">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        If your new password contains <strong>@</strong> or <strong>#</strong>, confirm the correct keyboard layout before saving. Wrong layout = future lockout.
       </div>
-
-      <div class="step">
-        <div class="num">4</div>
-        <div>Select <strong>Authenticator App</strong>.</div>
+      <div class="stuck-panel" id="stuck-1">
+        <h4>🔑 Stuck on Password?</h4>
+        <p>If the password doesn't meet requirements or you're getting an error, contact IT. Do <strong>not</strong> attempt this many times or your account will lock.</p>
+        <div class="stuck-actions">
+          <button class="btn btn-resolve" onclick="contactIT(1)">Contact IT Service Desk</button>
+          <button class="btn btn-unstuck" onclick="unstuck(1)">I sorted it out</button>
+        </div>
       </div>
+    </div>
+    <div class="step-footer">
+      <button class="btn btn-back" onclick="goBack()">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </button>
+      <button class="btn btn-stuck" onclick="toggleStuck(1)">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        I'm stuck
+      </button>
+      <button class="btn btn-primary" onclick="markDone(1)" style="margin-left:auto">
+        Password set ✓
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </div>
 
-      <div class="step">
-        <div class="num">5</div>
-        <div>Open Microsoft Authenticator on your phone and select <strong>Add account → Work or school account</strong>.</div>
+  <!-- STEP 3: MFA -->
+  <div class="step-card" id="step-2">
+    <div class="step-card-head">
+      <div class="step-num-badge" id="badge-2">03</div>
+      <div class="step-head-text">
+        <h2>Set Up MFA</h2>
+        <p>Multi-Factor Authentication via Microsoft Authenticator</p>
       </div>
-
-      <div class="step">
-        <div class="num">6</div>
-        <div>Scan the QR code shown on your laptop screen.</div>
+      <span class="step-status-pill" id="pill-2"></span>
+    </div>
+    <div class="step-body-content">
+      <p style="font-size:13.5px;color:var(--muted);margin-bottom:0.75rem;">First, install <strong>Microsoft Authenticator</strong> on your mobile phone, then follow these steps on your laptop:</p>
+      <ol class="num-steps">
+        <li>Open <strong>mysignins.microsoft.com/security-info</strong></li>
+        <li>Sign in with your company email and new password</li>
+        <li>Click <strong>Add sign-in method</strong></li>
+        <li>Select <strong>Authenticator App</strong></li>
+        <li>On your phone → <strong>Add account → Work or school account</strong></li>
+        <li>Scan the QR code shown on your laptop screen</li>
+        <li>Approve the test notification to complete setup ✓</li>
+      </ol>
+      <a href="https://mysignins.microsoft.com/security-info" target="_blank" class="link-btn">
+        Open My Sign-Ins
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+      <div class="stuck-panel" id="stuck-2">
+        <h4>📱 Stuck on MFA?</h4>
+        <p>Make sure you have Microsoft Authenticator installed on your phone first. If the QR scan fails or you're not receiving the test notification, contact IT.</p>
+        <div class="stuck-actions">
+          <button class="btn btn-resolve" onclick="contactIT(2)">Contact IT Service Desk</button>
+          <button class="btn btn-unstuck" onclick="unstuck(2)">I sorted it out</button>
+        </div>
       </div>
+    </div>
+    <div class="step-footer">
+      <button class="btn btn-back" onclick="goBack()">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </button>
+      <button class="btn btn-stuck" onclick="toggleStuck(2)">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        I'm stuck
+      </button>
+      <button class="btn btn-primary" onclick="markDone(2)" style="margin-left:auto">
+        MFA ready ✓
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </div>
 
-      <div class="step">
-        <div class="num">7</div>
-        <div>Approve the test notification to complete MFA setup.</div>
+  <!-- STEP 4: Apps -->
+  <div class="step-card" id="step-3">
+    <div class="step-card-head">
+      <div class="step-num-badge" id="badge-3">04</div>
+      <div class="step-head-text">
+        <h2>Application Checks</h2>
+        <p>Verify Teams, Outlook, and OneDrive are working</p>
       </div>
-
-      <a class="button" href="https://mysignins.microsoft.com/security-info" target="_blank">Open My Sign-Ins</a>
-    </section>
-
-    <section id="apps" class="section">
-      <h2>4. Application Checks</h2>
-      <div class="grid">
-        <div class="mini-card">
-          <h3>Microsoft Teams</h3>
-          <ul>
+      <span class="step-status-pill" id="pill-3"></span>
+    </div>
+    <div class="step-body-content">
+      <div class="app-grid">
+        <div class="app-card">
+          <div class="app-icon" style="background:#e8f0fe;">💬</div>
+          <h4>Microsoft Teams</h4>
+          <ul class="app-checklist">
             <li>Open Teams</li>
-            <li>Confirm you are signed in</li>
-            <li>Check chats and channels appear</li>
+            <li>Confirm you're signed in</li>
+            <li>Check chats &amp; channels load</li>
           </ul>
-          <div class="alert">
-            If you see: <strong>"Your organization is using a newer version of Teams"</strong>,
-            contact IT so we can install the latest version.
-          </div>
         </div>
-
-        <div class="mini-card">
-          <h3>Outlook</h3>
-          <ul>
+        <div class="app-card">
+          <div class="app-icon" style="background:#fff3e0;">📧</div>
+          <h4>Outlook</h4>
+          <ul class="app-checklist">
             <li>Open Outlook</li>
-            <li>Sign in using your company email</li>
-            <li>Wait for mailbox setup</li>
+            <li>Sign in with company email</li>
             <li>Confirm emails start syncing</li>
           </ul>
         </div>
-
-        <div class="mini-card">
-          <h3>OneDrive</h3>
-          <ul>
-            <li>Confirm OneDrive is signed in</li>
-            <li>Check the sync icon appears</li>
-            <li>Click <strong>Save changes</strong> when prompted for backup</li>
+        <div class="app-card">
+          <div class="app-icon" style="background:#e8f5e9;">☁️</div>
+          <h4>OneDrive</h4>
+          <ul class="app-checklist">
+            <li>Confirm signed in</li>
+            <li>Check sync icon appears</li>
+            <li>Click Save changes for backup</li>
           </ul>
         </div>
       </div>
-    </section>
+      <div class="warn-box" style="margin-top:1rem;">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        If Teams says <em>"Your organization is using a newer version"</em> — contact IT for the latest version.
+      </div>
+      <div class="stuck-panel" id="stuck-3">
+        <h4>💻 App not working?</h4>
+        <p>If any app won't open, won't sign in, or isn't syncing — note which one and contact IT. Don't spend more than 5 minutes troubleshooting on your own.</p>
+        <div class="stuck-actions">
+          <button class="btn btn-resolve" onclick="contactIT(3)">Contact IT Service Desk</button>
+          <button class="btn btn-unstuck" onclick="unstuck(3)">I sorted it out</button>
+        </div>
+      </div>
+    </div>
+    <div class="step-footer">
+      <button class="btn btn-back" onclick="goBack()">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </button>
+      <button class="btn btn-stuck" onclick="toggleStuck(3)">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        I'm stuck
+      </button>
+      <button class="btn btn-primary" onclick="markDone(3)" style="margin-left:auto">
+        Apps working ✓
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </div>
 
-    <section id="updates" class="section">
-      <h2>5. Windows Updates</h2>
-      <div class="step">
-        <div class="num">1</div>
-        <div>Open <strong>Settings</strong>.</div>
+  <!-- STEP 5: Updates -->
+  <div class="step-card" id="step-4">
+    <div class="step-card-head">
+      <div class="step-num-badge" id="badge-4">05</div>
+      <div class="step-head-text">
+        <h2>Windows Updates</h2>
+        <p>Install all required updates before you start working</p>
       </div>
-      <div class="step">
-        <div class="num">2</div>
-        <div>Go to <strong>Windows Update</strong>.</div>
+      <span class="step-status-pill" id="pill-4"></span>
+    </div>
+    <div class="step-body-content">
+      <ol class="num-steps">
+        <li>Open <strong>Settings</strong></li>
+        <li>Go to <strong>Windows Update</strong></li>
+        <li>Click <strong>Check for updates</strong> and install all available updates</li>
+      </ol>
+      <div class="warn-box" style="margin-top:1rem;">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Updates may require a restart. Save any open work first.
       </div>
-      <div class="step">
-        <div class="num">3</div>
-        <div>Click <strong>Check for updates</strong> and install required updates.</div>
+      <div class="stuck-panel" id="stuck-4">
+        <h4>🔄 Update issues?</h4>
+        <p>If Windows Update shows an error or is stuck downloading, contact IT before trying anything else.</p>
+        <div class="stuck-actions">
+          <button class="btn btn-resolve" onclick="contactIT(4)">Contact IT Service Desk</button>
+          <button class="btn btn-unstuck" onclick="unstuck(4)">I sorted it out</button>
+        </div>
       </div>
-    </section>
+    </div>
+    <div class="step-footer">
+      <button class="btn btn-back" onclick="goBack()">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </button>
+      <button class="btn btn-stuck" onclick="toggleStuck(4)">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        I'm stuck
+      </button>
+      <button class="btn btn-primary" onclick="markDone(4)" style="margin-left:auto">
+        Updated ✓
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </div>
 
-    <section id="keyboard" class="section">
-      <h2>6. Keyboard Layout Setup</h2>
-      <p>If you prefer the US keyboard layout, you can add it yourself.</p>
+  <!-- STEP 6: Keyboard -->
+  <div class="step-card" id="step-5">
+    <div class="step-card-head">
+      <div class="step-num-badge" id="badge-5">06</div>
+      <div class="step-head-text">
+        <h2>Keyboard Layout</h2>
+        <p>Add US keyboard layout if preferred</p>
+      </div>
+      <span class="step-status-pill" id="pill-5"></span>
+    </div>
+    <div class="step-body-content">
+      <ol class="num-steps">
+        <li>Open <strong>Settings</strong></li>
+        <li>Go to <strong>Time &amp; Language → Language &amp; Region</strong></li>
+        <li>Click <strong>Add a language</strong> → install <strong>English (United States)</strong></li>
+      </ol>
+      <p style="font-size:13px;color:var(--muted);margin-top:0.75rem;">Switch between layouts using <span class="key">Ctrl</span> + <span class="key">Shift</span> or click the language icon in the taskbar.</p>
+      <div class="stuck-panel" id="stuck-5">
+        <h4>⌨️ Keyboard issues?</h4>
+        <p>If you can't find the language settings or the layout isn't switching correctly, contact IT.</p>
+        <div class="stuck-actions">
+          <button class="btn btn-resolve" onclick="contactIT(5)">Contact IT Service Desk</button>
+          <button class="btn btn-unstuck" onclick="unstuck(5)">I sorted it out</button>
+        </div>
+      </div>
+    </div>
+    <div class="step-footer">
+      <button class="btn btn-back" onclick="goBack()">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </button>
+      <button class="btn btn-stuck" onclick="toggleStuck(5)">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        I'm stuck
+      </button>
+      <button class="btn btn-primary" onclick="markDone(5)" style="margin-left:auto">
+        Done ✓
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </div>
 
-      <div class="step">
-        <div class="num">1</div>
-        <div>Open <strong>Settings</strong>.</div>
+  <!-- STEP 7: Timezone -->
+  <div class="step-card" id="step-6">
+    <div class="step-card-head">
+      <div class="step-num-badge" id="badge-6">07</div>
+      <div class="step-head-text">
+        <h2>Set Timezone to Cairo</h2>
+        <p>Ensures meetings &amp; notifications show the correct local time</p>
       </div>
-      <div class="step">
-        <div class="num">2</div>
-        <div>Go to <strong>Time & Language → Language & Region</strong>.</div>
+      <span class="step-status-pill" id="pill-6"></span>
+    </div>
+    <div class="step-body-content">
+      <ol class="num-steps">
+        <li>Open <strong>Settings</strong></li>
+        <li>Go to <strong>Time &amp; Language → Date &amp; Time</strong></li>
+        <li>Under <strong>Time Zone</strong>, select <strong>(UTC+02:00) Cairo</strong></li>
+      </ol>
+      <div class="stuck-panel" id="stuck-6">
+        <h4>🕐 Timezone not updating?</h4>
+        <p>If the timezone option is greyed out or Cairo doesn't appear, contact IT.</p>
+        <div class="stuck-actions">
+          <button class="btn btn-resolve" onclick="contactIT(6)">Contact IT Service Desk</button>
+          <button class="btn btn-unstuck" onclick="unstuck(6)">I sorted it out</button>
+        </div>
       </div>
-      <div class="step">
-        <div class="num">3</div>
-        <div>Click <strong>Add a language</strong> and install <strong>English (United States)</strong>.</div>
-      </div>
+    </div>
+    <div class="step-footer">
+      <button class="btn btn-back" onclick="goBack()">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </button>
+      <button class="btn btn-stuck" onclick="toggleStuck(6)">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        I'm stuck
+      </button>
+      <button class="btn btn-done" onclick="markDone(6)" style="margin-left:auto">
+        All done! 🎉
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      </button>
+    </div>
+  </div>
 
-      <div class="success">
-        You can switch keyboard layouts using <strong>Ctrl + Shift</strong> or from the language icon in the Windows taskbar.
-      </div>
-    </section>
+  <!-- COMPLETION SCREEN -->
+  <div class="completion-screen" id="completionScreen">
+    <div class="completion-icon">
+      <svg fill="none" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h2>Setup Complete! 🎉</h2>
+    <p>Great work — your laptop is ready. Welcome to Bupa, enjoy your first day!</p>
+    <button class="btn-restart" onclick="restartGuide()">Start over</button>
 
-    <section id="timezone" class="section">
-      <h2>7. Change Time Zone to Cairo</h2>
+    <div class="completion-steps-review" id="reviewList"></div>
 
-      <div class="step">
-        <div class="num">1</div>
-        <div>Open <strong>Settings</strong>.</div>
+    <div style="margin-top:1.5rem;">
+      <div class="help-card">
+        <div class="help-icon">🛟</div>
+        <h3>Need help later?</h3>
+        <p>Contact the IT Service Desk any time. <strong>Do not retry passwords repeatedly</strong> — always ask IT to avoid account lockout.</p>
       </div>
-      <div class="step">
-        <div class="num">2</div>
-        <div>Go to <strong>Time & Language → Date & Time</strong>.</div>
-      </div>
-      <div class="step">
-        <div class="num">3</div>
-        <div>Under <strong>Time Zone</strong>, select <strong>(UTC+02:00) Cairo</strong>.</div>
-      </div>
+    </div>
+  </div>
 
-      <div class="success">
-        This helps ensure Outlook calendar, Teams meetings, and notifications show the correct local time.
-      </div>
-    </section>
+</div><!-- end .shell -->
 
-    <section id="help" class="section">
-      <h2>Need Help?</h2>
-      <p>If you experience any issue during setup, please contact the IT Service Desk.</p>
-      <p><strong>Do not retry the password many times if it fails.</strong> Ask IT for help to avoid account lockout.</p>
-    </section>
-  </main>
+<script>
+const TOTAL = 7;
+const stepTitles = [
+  'First Login',
+  'Change Password',
+  'Set Up MFA',
+  'Application Checks',
+  'Windows Updates',
+  'Keyboard Layout',
+  'Set Timezone'
+];
 
-  <footer class="footer">
-    <p>Setup Complete ✅ Welcome aboard!</p>
-  </footer>
+let current = 0;
+let status = new Array(TOTAL).fill('pending'); // 'pending' | 'done' | 'stuck'
+let started = false;
+
+function init() {
+  buildDots();
+  showStep(0);
+}
+
+function buildDots() {
+  const nav = document.getElementById('dotsNav');
+  nav.innerHTML = '';
+  for (let i = 0; i < TOTAL; i++) {
+    const btn = document.createElement('button');
+    btn.className = 'dot-step';
+    btn.title = stepTitles[i];
+    btn.onclick = () => jumpTo(i);
+    btn.id = 'dot-' + i;
+    nav.appendChild(btn);
+  }
+}
+
+function showStep(idx) {
+  if (!started) {
+    started = true;
+    document.getElementById('heroSection').style.display = 'none';
+    document.getElementById('summaryBar').style.display = 'flex';
+  }
+  document.querySelectorAll('.step-card').forEach(c => c.classList.remove('active'));
+  document.getElementById('step-' + idx).classList.add('active');
+  current = idx;
+  updateDots();
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function jumpTo(idx) {
+  showStep(idx);
+}
+
+function markDone(idx) {
+  status[idx] = 'done';
+  // close stuck panel if open
+  const sp = document.getElementById('stuck-' + idx);
+  if (sp) sp.classList.remove('open');
+  updateBadge(idx);
+  updateStats();
+  if (idx < TOTAL - 1) {
+    showStep(idx + 1);
+  } else {
+    showCompletion();
+  }
+}
+
+function goBack() {
+  if (current > 0) showStep(current - 1);
+}
+
+function toggleStuck(idx) {
+  const panel = document.getElementById('stuck-' + idx);
+  const isOpen = panel.classList.toggle('open');
+  if (isOpen && status[idx] !== 'done') {
+    status[idx] = 'stuck';
+    updateBadge(idx);
+    updateStats();
+  }
+}
+
+function unstuck(idx) {
+  status[idx] = 'pending';
+  document.getElementById('stuck-' + idx).classList.remove('open');
+  updateBadge(idx);
+  updateStats();
+}
+
+function contactIT(idx) {
+  alert('Please contact the IT Service Desk for help with: ' + stepTitles[idx] + '\n\nDo not retry passwords repeatedly to avoid account lockout.');
+}
+
+function updateBadge(idx) {
+  const badge = document.getElementById('badge-' + idx);
+  const pill = document.getElementById('pill-' + idx);
+  const dot = document.getElementById('dot-' + idx);
+  const s = status[idx];
+
+  badge.className = 'step-num-badge';
+  pill.className = 'step-status-pill show';
+  dot.className = 'dot-step';
+
+  if (s === 'done') {
+    badge.classList.add('done-badge');
+    badge.textContent = '✓';
+    pill.textContent = 'Done';
+    pill.classList.add('pill-done');
+    dot.classList.add('done');
+  } else if (s === 'stuck') {
+    badge.classList.add('stuck-badge');
+    badge.textContent = '!';
+    pill.textContent = 'Stuck';
+    pill.classList.add('pill-stuck');
+    dot.classList.add('stuck');
+  } else {
+    badge.textContent = String(idx + 1).padStart(2, '0');
+    pill.className = 'step-status-pill';
+  }
+}
+
+function updateDots() {
+  for (let i = 0; i < TOTAL; i++) {
+    const dot = document.getElementById('dot-' + i);
+    dot.classList.toggle('active', i === current);
+  }
+}
+
+function updateProgress() {
+  const done = status.filter(s => s === 'done').length;
+  const pct = Math.round((done / TOTAL) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = done + ' / ' + TOTAL;
+  updateDots();
+}
+
+function updateStats() {
+  const done = status.filter(s => s === 'done').length;
+  const stuck = status.filter(s => s === 'stuck').length;
+  const left = TOTAL - done;
+  document.getElementById('statDone').textContent = done;
+  document.getElementById('statStuck').textContent = stuck;
+  document.getElementById('statLeft').textContent = left;
+  updateProgress();
+}
+
+function showCompletion() {
+  document.querySelectorAll('.step-card').forEach(c => c.classList.remove('active'));
+  document.getElementById('dotsNav').style.display = 'none';
+  document.getElementById('summaryBar').style.display = 'none';
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('progressLabel').textContent = TOTAL + ' / ' + TOTAL;
+
+  const list = document.getElementById('reviewList');
+  list.innerHTML = '<p style="font-size:12px;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Your setup summary</p>';
+  for (let i = 0; i < TOTAL; i++) {
+    const s = status[i];
+    const row = document.createElement('div');
+    row.className = 'review-item';
+    const dotClass = s === 'done' ? 'done' : s === 'stuck' ? 'stuck' : '';
+    const statusText = s === 'done' ? 'Completed' : s === 'stuck' ? 'Had issue' : 'Skipped';
+    const statusClass = s === 'done' ? 'status-done' : s === 'stuck' ? 'status-stuck' : '';
+    row.innerHTML = `<span class="review-dot ${dotClass}"></span><span style="font-size:13.5px">${stepTitles[i]}</span><span class="review-status ${statusClass}">${statusText}</span>`;
+    list.appendChild(row);
+  }
+
+  document.getElementById('completionScreen').classList.add('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function restartGuide() {
+  status = new Array(TOTAL).fill('pending');
+  started = false;
+  current = 0;
+  document.getElementById('completionScreen').classList.remove('show');
+  document.getElementById('dotsNav').style.display = 'flex';
+  document.getElementById('heroSection').style.display = 'block';
+  document.getElementById('summaryBar').style.display = 'none';
+  document.getElementById('progressFill').style.width = '0%';
+  document.getElementById('progressLabel').textContent = '0 / 7';
+  for (let i = 0; i < TOTAL; i++) updateBadge(i);
+  buildDots();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+init();
+</script>
 </body>
 </html>
-'''
-
-path = "/mnt/data/index.html"
-with open(path, "w", encoding="utf-8") as f:
-    f.write(html)
-
-print(path)
-
