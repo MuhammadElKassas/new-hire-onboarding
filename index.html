@@ -430,7 +430,14 @@ body {
 <!-- TOP BAR -->
 <div class="topbar">
   <div class="topbar-inner">
-    <div class="bupa-logo">bupa<span>.</span></div>
+    <svg height="28" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Bupa" style="flex-shrink:0;">
+  <!-- Blue square background -->
+  <rect width="40" height="40" rx="4" fill="#0079C8"/>
+  <!-- Heartbeat/pulse line inside square -->
+  <polyline points="4,22 10,22 14,12 18,30 22,18 26,26 30,22 36,22" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- BUPA text -->
+  <text x="48" y="28" font-family="'DM Sans', Arial, sans-serif" font-size="20" font-weight="700" fill="white" letter-spacing="-0.5">Bupa</text>
+</svg>
     <div class="progress-bar-wrap">
       <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
     </div>
@@ -1024,14 +1031,28 @@ function restartGuide() {
   status = new Array(TOTAL).fill('pending');
   started = false;
   current = 0;
+
   document.getElementById('completionScreen').classList.remove('show');
+
+  for (let i = 0; i < TOTAL; i++) {
+    const sp = document.getElementById('stuck-' + i);
+    if (sp) sp.classList.remove('open');
+  }
+
+  document.querySelectorAll('.step-card').forEach(c => c.classList.remove('active'));
+
   document.getElementById('dotsNav').style.display = 'flex';
   document.getElementById('heroSection').style.display = 'block';
   document.getElementById('summaryBar').style.display = 'none';
   document.getElementById('progressFill').style.width = '0%';
-  document.getElementById('progressLabel').textContent = '0 / 7';
+  document.getElementById('progressLabel').textContent = '0 / ' + TOTAL;
+  document.getElementById('statDone').textContent = '0';
+  document.getElementById('statStuck').textContent = '0';
+  document.getElementById('statLeft').textContent = TOTAL;
+
   for (let i = 0; i < TOTAL; i++) updateBadge(i);
   buildDots();
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
