@@ -646,15 +646,69 @@ body {
     </div>
   </div>
 
-  <!-- STEP 4: Apps -->
+  <!-- STEP 4: Phone Backup -->
   <div class="step-card" id="step-3">
     <div class="step-card-head">
       <div class="step-num-badge" id="badge-3">04</div>
       <div class="step-head-text">
+        <h2>Add Phone Number as Backup</h2>
+        <p>SMS fallback in case the Authenticator app is unavailable</p>
+      </div>
+      <span class="step-status-pill" id="pill-3"></span>
+    </div>
+    <div class="step-body-content">
+      <p style="font-size:13.5px;color:var(--muted);margin-bottom:0.75rem;">Adding your mobile number as a backup method means you can still sign in via SMS code if you lose access to the Authenticator app, change phones, or have connectivity issues.</p>
+      <ol class="num-steps">
+        <li>Go back to <strong>mysignins.microsoft.com/security-info</strong> (you should still be signed in)</li>
+        <li>Click <strong>Add sign-in method</strong></li>
+        <li>Select <strong>Phone</strong> from the dropdown</li>
+        <li>Choose <strong>Egypt (+20)</strong> as the country code and enter your mobile number</li>
+        <li>Select <strong>Text me a code</strong> and click <strong>Next</strong></li>
+        <li>Enter the 6-digit SMS code sent to your phone</li>
+        <li>Click <strong>Done</strong> — your phone number is now a backup ✓</li>
+      </ol>
+      <a href="https://mysignins.microsoft.com/security-info" target="_blank" class="link-btn">
+        Open My Sign-Ins
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+      <div class="warn-box" style="margin-top:1rem;">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Use your <strong>personal mobile number</strong>, not an office landline. SMS codes expire quickly — enter it promptly once received.
+      </div>
+      <div class="stuck-panel" id="stuck-3">
+        <h4>📵 Stuck on Phone Backup?</h4>
+        <p>If you don't receive the SMS, check your country code is set to +20 (Egypt) and that the number is correct. Some carriers may have a short delay. If it still doesn't arrive after 2 minutes, contact IT.</p>
+        <div class="stuck-actions">
+          <button class="btn btn-resolve" onclick="contactIT(3)">Contact IT Service Desk</button>
+          <button class="btn btn-unstuck" onclick="unstuck(3)">I sorted it out</button>
+        </div>
+      </div>
+    </div>
+    <div class="step-footer">
+      <button class="btn btn-back" onclick="goBack()">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </button>
+      <button class="btn btn-stuck" onclick="toggleStuck(3)">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        I'm stuck
+      </button>
+      <button class="btn btn-done" onclick="markDone(3)" style="margin-left:auto">
+        Phone added ✓
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 5: Apps -->
+  <div class="step-card" id="step-4">
+    <div class="step-card-head">
+      <div class="step-num-badge" id="badge-4">05</div>
+      <div class="step-head-text">
         <h2>Application Checks</h2>
         <p>Verify Teams, Outlook, and OneDrive are working</p>
       </div>
-      <span class="step-status-pill" id="pill-3"></span>
+      <span class="step-status-pill" id="pill-4"></span>
     </div>
     <div class="step-body-content">
       <div class="app-grid">
@@ -719,54 +773,9 @@ body {
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
         If Teams says <em>"Your organization is using a newer version"</em> — contact IT for the latest version.
       </div>
-      <div class="stuck-panel" id="stuck-3">
+      <div class="stuck-panel" id="stuck-4">
         <h4>💻 App not working?</h4>
         <p>If any app won't open, won't sign in, or isn't syncing — note which one and contact IT. Don't spend more than 5 minutes troubleshooting on your own.</p>
-        <div class="stuck-actions">
-          <button class="btn btn-resolve" onclick="contactIT(3)">Contact IT Service Desk</button>
-          <button class="btn btn-unstuck" onclick="unstuck(3)">I sorted it out</button>
-        </div>
-      </div>
-    </div>
-    <div class="step-footer">
-      <button class="btn btn-back" onclick="goBack()">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-        Back
-      </button>
-      <button class="btn btn-stuck" onclick="toggleStuck(3)">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        I'm stuck
-      </button>
-      <button class="btn btn-primary" onclick="markDone(3)" style="margin-left:auto">
-        Apps working ✓
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-      </button>
-    </div>
-  </div>
-
-  <!-- STEP 5: Updates -->
-  <div class="step-card" id="step-4">
-    <div class="step-card-head">
-      <div class="step-num-badge" id="badge-4">05</div>
-      <div class="step-head-text">
-        <h2>Windows Updates</h2>
-        <p>Install all required updates before you start working</p>
-      </div>
-      <span class="step-status-pill" id="pill-4"></span>
-    </div>
-    <div class="step-body-content">
-      <ol class="num-steps">
-        <li>Open <strong>Settings</strong></li>
-        <li>Go to <strong>Windows Update</strong></li>
-        <li>Click <strong>Check for updates</strong> and install all available updates</li>
-      </ol>
-      <div class="warn-box" style="margin-top:1rem;">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        Updates may require a restart. Save any open work first.
-      </div>
-      <div class="stuck-panel" id="stuck-4">
-        <h4>🔄 Update issues?</h4>
-        <p>If Windows Update shows an error or is stuck downloading, contact IT before trying anything else.</p>
         <div class="stuck-actions">
           <button class="btn btn-resolve" onclick="contactIT(4)">Contact IT Service Desk</button>
           <button class="btn btn-unstuck" onclick="unstuck(4)">I sorted it out</button>
@@ -783,21 +792,66 @@ body {
         I'm stuck
       </button>
       <button class="btn btn-primary" onclick="markDone(4)" style="margin-left:auto">
+        Apps working ✓
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 6: Updates -->
+  <div class="step-card" id="step-5">
+    <div class="step-card-head">
+      <div class="step-num-badge" id="badge-5">06</div>
+      <div class="step-head-text">
+        <h2>Windows Updates</h2>
+        <p>Install all required updates before you start working</p>
+      </div>
+      <span class="step-status-pill" id="pill-5"></span>
+    </div>
+    <div class="step-body-content">
+      <ol class="num-steps">
+        <li>Open <strong>Settings</strong></li>
+        <li>Go to <strong>Windows Update</strong></li>
+        <li>Click <strong>Check for updates</strong> and install all available updates</li>
+      </ol>
+      <div class="warn-box" style="margin-top:1rem;">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Updates may require a restart. Save any open work first.
+      </div>
+      <div class="stuck-panel" id="stuck-5">
+        <h4>🔄 Update issues?</h4>
+        <p>If Windows Update shows an error or is stuck downloading, contact IT before trying anything else.</p>
+        <div class="stuck-actions">
+          <button class="btn btn-resolve" onclick="contactIT(5)">Contact IT Service Desk</button>
+          <button class="btn btn-unstuck" onclick="unstuck(5)">I sorted it out</button>
+        </div>
+      </div>
+    </div>
+    <div class="step-footer">
+      <button class="btn btn-back" onclick="goBack()">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </button>
+      <button class="btn btn-stuck" onclick="toggleStuck(5)">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        I'm stuck
+      </button>
+      <button class="btn btn-primary" onclick="markDone(5)" style="margin-left:auto">
         Updated ✓
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
     </div>
   </div>
 
-  <!-- STEP 6: Optional (Keyboard + Timezone) -->
-  <div class="step-card" id="step-5">
+  <!-- STEP 7: Optional (Keyboard + Timezone) -->
+  <div class="step-card" id="step-6">
     <div class="step-card-head">
-      <div class="step-num-badge" id="badge-5">06</div>
+      <div class="step-num-badge" id="badge-6">07</div>
       <div class="step-head-text">
         <h2>Optional if needed</h2>
         <p>Keyboard language &amp; timezone settings — only apply if required</p>
       </div>
-      <span class="step-status-pill" id="pill-5"></span>
+      <span class="step-status-pill" id="pill-6"></span>
     </div>
         <div class="step-body-content">
 
@@ -822,12 +876,12 @@ body {
         </ol>
       </div>
 
-      <div class="stuck-panel" id="stuck-5">
+      <div class="stuck-panel" id="stuck-6">
         <h4>⚙️ Something not working?</h4>
         <p>If you can't find the language settings, the layout isn't switching, or the timezone option is greyed out, contact IT.</p>
         <div class="stuck-actions">
-          <button class="btn btn-resolve" onclick="contactIT(5)">Contact IT Service Desk</button>
-          <button class="btn btn-unstuck" onclick="unstuck(5)">I sorted it out</button>
+          <button class="btn btn-resolve" onclick="contactIT(6)">Contact IT Service Desk</button>
+          <button class="btn btn-unstuck" onclick="unstuck(6)">I sorted it out</button>
         </div>
       </div>
     </div>
@@ -836,11 +890,11 @@ body {
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
         Back
       </button>
-      <button class="btn btn-stuck" onclick="toggleStuck(5)">
+      <button class="btn btn-stuck" onclick="toggleStuck(6)">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
         I'm stuck
       </button>
-      <button class="btn btn-done" onclick="markDone(5)" style="margin-left:auto">
+      <button class="btn btn-done" onclick="markDone(6)" style="margin-left:auto">
         All done! 🎉
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
       </button>
@@ -870,11 +924,12 @@ body {
 </div><!-- end .shell -->
 
 <script>
-const TOTAL = 6;
+const TOTAL = 7;
 const stepTitles = [
   'First Login',
   'Change Password',
   'Set Up MFA',
+  'Add Phone Backup',
   'Application Checks',
   'Windows Updates',
   'Optional if needed'
