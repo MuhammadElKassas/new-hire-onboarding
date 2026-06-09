@@ -34,6 +34,153 @@ body {
   line-height: 1.6;
 }
 
+
+/* ── EMAIL CAPTURE SCREEN ── */
+.email-screen {
+  background: var(--brand);
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.25rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.email-screen::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  background: rgba(79,142,247,0.1);
+  pointer-events: none;
+}
+.email-screen::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -60px;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: rgba(16,185,129,0.08);
+  pointer-events: none;
+}
+.email-screen-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 400px;
+}
+.email-screen .hero-badge {
+  margin-bottom: 1rem;
+}
+.email-screen h1 {
+  font-size: clamp(1.7rem, 5vw, 2.4rem);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+.email-screen .subtitle {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+.email-form-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 16px;
+  padding: 1.75rem;
+  text-align: left;
+}
+.email-form-card label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 6px;
+}
+.email-form-card input {
+  width: 100%;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 14px;
+  font-family: 'DM Sans', sans-serif;
+  color: white;
+  outline: none;
+  transition: border 0.2s;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+}
+.email-form-card input::placeholder { color: rgba(255,255,255,0.3); }
+.email-form-card input:focus { border-color: rgba(79,142,247,0.6); background: rgba(255,255,255,0.1); }
+.email-form-card input.error { border-color: #ef4444; }
+.btn-send-email {
+  width: 100%;
+  background: #0079C8;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
+  margin-top: 0.25rem;
+}
+.btn-send-email:hover:not(:disabled) { background: #006bb5; }
+.btn-send-email:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-send-email svg { width: 17px; height: 17px; }
+.email-status {
+  margin-top: 1rem;
+  font-size: 13px;
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: none;
+  text-align: center;
+}
+.email-status.sending { display: block; background: rgba(79,142,247,0.15); color: #93c5fd; border: 1px solid rgba(79,142,247,0.3); }
+.email-status.success { display: block; background: rgba(16,185,129,0.15); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.3); }
+.email-status.error-msg { display: block; background: rgba(239,68,68,0.15); color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); }
+.skip-link {
+  margin-top: 1.25rem;
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.35);
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.skip-link:hover { color: rgba(255,255,255,0.55); }
+.outlook-note {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+}
+.outlook-note svg { width: 14px; height: 14px; opacity: 0.5; }
+
+@media (max-width: 560px) {
+  .email-form-card { padding: 1.25rem; }
+  .email-screen h1 { font-size: 1.6rem; }
+}
+
 /* ── LAYOUT ── */
 .shell {
   max-width: 680px;
@@ -983,22 +1130,102 @@ body {
     </div>
     <h2>Setup Complete! 🎉</h2>
     <p>Great work — your laptop is ready. Welcome to Bupa, enjoy your first day!</p>
-    <button class="btn-restart" onclick="restartGuide()">Start over</button>
 
     <div class="completion-steps-review" id="reviewList"></div>
 
-    <div style="margin-top:1.5rem;">
+    <!-- EMAIL CAPTURE CARD -->
+    <div id="emailCapture" style="margin-top:1.5rem;background:linear-gradient(135deg,#f0f4ff 0%,#e8f5ff 100%);border:1px solid #c7d9ff;border-radius:14px;padding:1.5rem;text-align:left;">
+      <p style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:0.75rem;">📬 Your Bupa IT Welcome Pack</p>
+      <p style="font-size:13.5px;color:var(--muted);margin-bottom:1rem;line-height:1.5;">We'll send your essential IT links to your Outlook — VPN access, incident reporting, IT support, and more. Everything you'll need from Day 1 onwards.</p>
+
+      <div style="margin-bottom:0.75rem;">
+        <label style="display:block;font-size:11.5px;font-weight:600;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.04em;">Your Name</label>
+        <input id="inputName" type="text" placeholder="e.g. Ahmed Hassan" autocomplete="name"
+          style="width:100%;border:1.5px solid var(--border);border-radius:9px;padding:11px 13px;font-size:14px;font-family:inherit;color:var(--text);outline:none;box-sizing:border-box;background:white;transition:border 0.2s;"
+          onfocus="this.style.borderColor='#4f8ef7'" onblur="this.style.borderColor='var(--border)'">
+      </div>
+      <div style="margin-bottom:1rem;">
+        <label style="display:block;font-size:11.5px;font-weight:600;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.04em;">Your Bupa Email</label>
+        <input id="inputEmail" type="email" placeholder="yourname@bupa.com" autocomplete="email"
+          style="width:100%;border:1.5px solid var(--border);border-radius:9px;padding:11px 13px;font-size:14px;font-family:inherit;color:var(--text);outline:none;box-sizing:border-box;background:white;transition:border 0.2s;"
+          onfocus="this.style.borderColor='#4f8ef7'" onblur="this.style.borderColor='var(--border)'">
+      </div>
+
+      <button id="sendBtn" onclick="submitEmail()"
+        style="width:100%;background:var(--accent);color:white;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity 0.2s;">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="16" height="16"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        Send to my Outlook
+      </button>
+
+      <div id="emailStatus" style="display:none;margin-top:0.75rem;font-size:13px;border-radius:8px;padding:10px 13px;text-align:center;"></div>
+    </div>
+
+    <div style="margin-top:1.25rem;">
       <div class="help-card">
         <div class="help-icon">🛟</div>
         <h3>Need help later?</h3>
         <p>Contact the IT Service Desk any time. <strong>Do not retry passwords repeatedly</strong> — always ask IT to avoid account lockout.</p>
       </div>
     </div>
+
+    <button class="btn-restart" onclick="restartGuide()" style="margin-top:1.25rem;">Start over</button>
   </div>
 
 </div><!-- end .shell -->
 
 <script>
+// ─────────────────────────────────────────────
+// POWER AUTOMATE CONFIG
+// Paste your Power Automate HTTP trigger URL below
+// ─────────────────────────────────────────────
+const POWER_AUTOMATE_URL = "https://default02af5f5edd71405680903e7b436a65.db.environment.api.powerplatform.com/powerautomate/automations/direct/workflows/3e5dec985dbf444fa8983d0c56ca5637/triggers/manual/paths/invoke?api-version=1";
+
+// ─────────────────────────────────────────────
+// EMAIL CAPTURE (end of guide)
+// ─────────────────────────────────────────────
+window.submitEmail = async function() {
+  const name  = document.getElementById('inputName').value.trim();
+  const email = document.getElementById('inputEmail').value.trim();
+  const status = document.getElementById('emailStatus');
+  const btn    = document.getElementById('sendBtn');
+
+  // Validation
+  if (!name) { document.getElementById('inputName').style.borderColor = '#ef4444'; return; }
+  if (!email || !email.includes('@')) { document.getElementById('inputEmail').style.borderColor = '#ef4444'; return; }
+
+  // Sending state
+  btn.disabled = true;
+  btn.innerHTML = '📨 Sending…';
+  status.style.display = 'block';
+  status.style.background = '#eff6ff';
+  status.style.color = '#2563eb';
+  status.style.border = '1px solid #bfdbfe';
+  status.textContent = 'Sending your onboarding summary…';
+
+  try {
+    if (POWER_AUTOMATE_URL && POWER_AUTOMATE_URL !== "YOUR_POWER_AUTOMATE_URL_HERE") {
+      await fetch(POWER_AUTOMATE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email })
+      });
+    }
+    status.style.background = '#f0fdf4';
+    status.style.color = '#15803d';
+    status.style.border = '1px solid #bbf7d0';
+    status.textContent = '✅ Sent! Check your Outlook inbox.';
+    document.getElementById('emailCapture').style.opacity = '0.6';
+    document.getElementById('emailCapture').style.pointerEvents = 'none';
+  } catch (err) {
+    status.style.background = '#fef2f2';
+    status.style.color = '#dc2626';
+    status.style.border = '1px solid #fecaca';
+    status.textContent = '⚠️ Could not send right now. Please contact IT directly.';
+    btn.disabled = false;
+    btn.innerHTML = 'Retry';
+  }
+}
+
 const TOTAL = 7;
 const stepTitles = [
   'First Login',
