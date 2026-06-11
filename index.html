@@ -1146,29 +1146,21 @@ body {
 
     <!-- EMAIL CAPTURE CARD -->
     <div id="emailCapture" style="margin-top:1.5rem;background:linear-gradient(135deg,#f0f4ff 0%,#e8f5ff 100%);border:1px solid #c7d9ff;border-radius:14px;padding:1.5rem;text-align:left;">
-      <p style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:0.75rem;">📬 Your Bupa IT Welcome Pack</p>
-      <p style="font-size:13.5px;color:var(--muted);margin-bottom:1rem;line-height:1.5;">We'll send your essential IT links to your Outlook — VPN access, incident reporting, IT support, and more. Everything you'll need from Day 1 onwards.</p>
-
-      <div style="margin-bottom:0.75rem;">
-        <label style="display:block;font-size:11.5px;font-weight:600;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.04em;">Your Name</label>
-        <input id="inputName" type="text" placeholder="e.g. Ahmed Hassan" autocomplete="name"
-          style="width:100%;border:1.5px solid var(--border);border-radius:9px;padding:11px 13px;font-size:14px;font-family:inherit;color:var(--text);outline:none;box-sizing:border-box;background:white;transition:border 0.2s;"
-          onfocus="this.style.borderColor='#4f8ef7'" onblur="this.style.borderColor='var(--border)'">
+      <p style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:0.4rem;">📬 Bupa IT Onboarding Guide </p>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:1rem;line-height:1.5;">We'll send your essential IT links to your Outlook — VPN access, incident reporting, IT support, and more.</p>
+      <div style="border-radius:10px;overflow:hidden;border:1px solid #c7d9ff;background:white;">
+        <iframe
+          src="https://forms.microsoft.com/Pages/ResponsePage.aspx?id=Xl-vAnHdVkCAkD57Q2pl27PER7mipPRCumV1Rqt0gmtUQ0cyOEI2VzBQUUlUVkZNWUhFS1MzV0RSNC4u&embed=true"
+          frameborder="0"
+          marginwidth="0"
+          marginheight="0"
+          style="width:100%;height:360px;display:block;border:none;"
+          allowfullscreen
+          webkitallowfullscreen
+          mozallowfullscreen
+          msallowfullscreen>
+        </iframe>
       </div>
-      <div style="margin-bottom:1rem;">
-        <label style="display:block;font-size:11.5px;font-weight:600;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.04em;">Your Bupa Email</label>
-        <input id="inputEmail" type="email" placeholder="yourname@bupa.com" autocomplete="email"
-          style="width:100%;border:1.5px solid var(--border);border-radius:9px;padding:11px 13px;font-size:14px;font-family:inherit;color:var(--text);outline:none;box-sizing:border-box;background:white;transition:border 0.2s;"
-          onfocus="this.style.borderColor='#4f8ef7'" onblur="this.style.borderColor='var(--border)'">
-      </div>
-
-      <button id="sendBtn" onclick="submitEmail()"
-        style="width:100%;background:var(--accent);color:white;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity 0.2s;">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="16" height="16"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        Send to my Outlook
-      </button>
-
-      <div id="emailStatus" style="display:none;margin-top:0.75rem;font-size:13px;border-radius:8px;padding:10px 13px;text-align:center;"></div>
     </div>
 
     <div style="margin-top:1.25rem;">
@@ -1185,57 +1177,7 @@ body {
 </div><!-- end .shell -->
 
 <script>
-// ─────────────────────────────────────────────
-// POWER AUTOMATE CONFIG
-// Paste your Power Automate HTTP trigger URL below
-// ─────────────────────────────────────────────
-const POWER_AUTOMATE_URL = "https://default02af5f5edd71405680903e7b436a65.db.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/3e5dec985dbf444fa8983d0c56ca5637/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=4eE6u3DsLFuPuxwrd2tBTS4D3-mjun7ixWM6NbnT6YY";
 
-// ─────────────────────────────────────────────
-// EMAIL CAPTURE (end of guide)
-// ─────────────────────────────────────────────
-window.submitEmail = async function() {
-  const name  = document.getElementById('inputName').value.trim();
-  const email = document.getElementById('inputEmail').value.trim();
-  const status = document.getElementById('emailStatus');
-  const btn    = document.getElementById('sendBtn');
-
-  // Validation
-  if (!name) { document.getElementById('inputName').style.borderColor = '#ef4444'; return; }
-  if (!email || !email.includes('@')) { document.getElementById('inputEmail').style.borderColor = '#ef4444'; return; }
-
-  // Sending state
-  btn.disabled = true;
-  btn.innerHTML = '📨 Sending…';
-  status.style.display = 'block';
-  status.style.background = '#eff6ff';
-  status.style.color = '#2563eb';
-  status.style.border = '1px solid #bfdbfe';
-  status.textContent = 'Sending your onboarding summary…';
-
-  try {
-    if (POWER_AUTOMATE_URL && POWER_AUTOMATE_URL !== "YOUR_POWER_AUTOMATE_URL_HERE") {
-      await fetch(POWER_AUTOMATE_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email })
-      });
-    }
-    status.style.background = '#f0fdf4';
-    status.style.color = '#15803d';
-    status.style.border = '1px solid #bbf7d0';
-    status.textContent = '✅ Sent! Check your Outlook inbox.';
-    document.getElementById('emailCapture').style.opacity = '0.6';
-    document.getElementById('emailCapture').style.pointerEvents = 'none';
-  } catch (err) {
-    status.style.background = '#fef2f2';
-    status.style.color = '#dc2626';
-    status.style.border = '1px solid #fecaca';
-    status.textContent = '⚠️ Could not send right now. Please contact IT directly.';
-    btn.disabled = false;
-    btn.innerHTML = 'Retry';
-  }
-}
 
 const TOTAL = 7;
 const stepTitles = [
