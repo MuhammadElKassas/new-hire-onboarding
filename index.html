@@ -646,9 +646,179 @@ body {
   .help-card h3 { font-size: 0.95rem; }
   .help-card p { font-size: 13px; }
 }
+
+/* ── TUTORIAL OVERLAY ── */
+.tutorial-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0 1rem 1.5rem;
+  pointer-events: none;
+}
+.tutorial-overlay.hidden { display: none; }
+.tutorial-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,10,30,0.55);
+  backdrop-filter: blur(2px);
+  pointer-events: all;
+}
+.tutorial-card {
+  position: relative;
+  z-index: 2;
+  background: white;
+  border-radius: 20px;
+  padding: 1.75rem 1.75rem 1.5rem;
+  max-width: 420px;
+  width: 100%;
+  pointer-events: all;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.25);
+  animation: slideUp 0.35s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes slideUp {
+  from { opacity:0; transform: translateY(40px) scale(0.97); }
+  to   { opacity:1; transform: translateY(0)   scale(1);    }
+}
+.tut-step-indicator {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 1.25rem;
+}
+.tut-dot {
+  height: 3px;
+  border-radius: 100px;
+  background: #e2e8f0;
+  flex: 1;
+  transition: background 0.3s;
+}
+.tut-dot.active { background: #0079C8; }
+.tut-dot.past   { background: #10b981; }
+.tut-icon {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+  line-height: 1;
+}
+.tutorial-card h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.tutorial-card p {
+  font-size: 13.5px;
+  color: #64748b;
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+.tut-highlight {
+  background: #f0f4ff;
+  border: 1px solid #c7d9ff;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #1a1a2e;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tut-highlight svg { width:18px; height:18px; stroke:#0079C8; flex-shrink:0; }
+.tut-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tut-btn-next {
+  flex: 1;
+  background: #0079C8;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background 0.2s;
+}
+.tut-btn-next:hover { background: #006bb5; }
+.tut-btn-next svg { width: 16px; height: 16px; }
+.tut-btn-skip {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  padding: 8px;
+  white-space: nowrap;
+}
+.tut-btn-skip:hover { color: #64748b; }
+
+/* ── SPOTLIGHT HIGHLIGHT ── */
+.spotlight-ring {
+  position: fixed;
+  border: 3px solid #0079C8;
+  border-radius: 12px;
+  box-shadow: 0 0 0 9999px rgba(10,10,30,0.0);
+  pointer-events: none;
+  z-index: 9998;
+  transition: all 0.4s cubic-bezier(0.34,1.2,0.64,1);
+  opacity: 0;
+}
+.spotlight-ring.visible { opacity: 1; }
+
+/* ── PULSE ANIMATION ON NEXT BUTTON ── */
+@keyframes pulseCTA {
+  0%   { box-shadow: 0 0 0 0   rgba(0,121,200,0.45); }
+  70%  { box-shadow: 0 0 0 10px rgba(0,121,200,0);    }
+  100% { box-shadow: 0 0 0 0   rgba(0,121,200,0);     }
+}
+.btn-primary.pulse-hint {
+  animation: pulseCTA 1.8s ease-out 3;
+}
+
+@media (max-width: 560px) {
+  .tutorial-card { padding: 1.5rem 1.25rem 1.25rem; border-radius: 16px; }
+  .tutorial-card h3 { font-size: 1rem; }
+  .tutorial-card p { font-size: 13px; }
+}
 </style>
 </head>
 <body>
+
+<!-- TUTORIAL OVERLAY -->
+<div class="tutorial-overlay" id="tutorialOverlay">
+  <div class="tutorial-backdrop" onclick="skipTutorial()"></div>
+  <div class="tutorial-card" id="tutorialCard">
+    <div class="tut-step-indicator" id="tutDots"></div>
+    <div class="tut-icon" id="tutIcon">👋</div>
+    <h3 id="tutTitle">Welcome to your IT setup guide</h3>
+    <p id="tutDesc">This guide walks you through setting up your Bupa laptop, step by step. It takes about 30 minutes total.</p>
+    <div class="tut-highlight" id="tutHighlight">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span>7 steps · You can restart anytime if needed</span>
+    </div>
+    <div class="tut-actions">
+      <button class="tut-btn-skip" onclick="skipTutorial()">Skip</button>
+      <button class="tut-btn-next" id="tutNextBtn" onclick="nextTutStep()">
+        Got it
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- SPOTLIGHT RING -->
+<div class="spotlight-ring" id="spotlightRing"></div>
 
 <!-- TOP BAR -->
 <div class="topbar">
@@ -1153,7 +1323,7 @@ body {
         style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;box-sizing:border-box;background:var(--accent);color:white;text-decoration:none;font-size:14px;font-weight:600;font-family:inherit;padding:13px;border-radius:10px;transition:opacity 0.2s;"
         onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="16" height="16"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        Send me the IT Welcome Pack
+        Send me the IT Welcome Guide
       </a>
     </div>
 
@@ -1217,11 +1387,20 @@ function showStep(idx) {
     document.getElementById('summaryBar').style.display = 'flex';
   }
   document.querySelectorAll('.step-card').forEach(c => c.classList.remove('active'));
-  document.getElementById('step-' + idx).classList.add('active');
+  const card = document.getElementById('step-' + idx);
+  card.classList.add('active');
   current = idx;
   updateDots();
   updateProgress();
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  // pulse the primary CTA button to guide new users
+  const cta = card.querySelector('.btn-primary, .btn-done');
+  if (cta) {
+    cta.classList.remove('pulse-hint');
+    void cta.offsetWidth; // reflow to restart animation
+    cta.classList.add('pulse-hint');
+    setTimeout(() => cta.classList.remove('pulse-hint'), 6000);
+  }
 }
 
 function jumpTo(idx) {
@@ -1374,6 +1553,127 @@ function restartGuide() {
 }
 
 init();
+
+/* ── TUTORIAL SYSTEM ── */
+const tutSteps = [
+  {
+    icon: '👋',
+    title: 'Welcome to your IT setup guide',
+    desc: 'This walks you through setting up your Bupa laptop step by step. It takes about 30 minutes total.',
+    highlight: '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>7 steps · You can restart anytime if needed</span>',
+    btnLabel: 'Let\'s go',
+    spotlight: null
+  },
+  {
+    icon: '🔵',
+    title: 'Track your progress at the top',
+    desc: 'The bar at the top fills up as you complete each step. You can always see how far along you are.',
+    highlight: '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="18" height="18"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Progress bar shows completed steps out of 7</span>',
+    btnLabel: 'Next',
+    spotlight: 'progressFill'
+  },
+  {
+    icon: '🔘',
+    title: 'Jump between steps using the dots',
+    desc: 'The row of dots below the header represents each step. Green = done, blue = current, amber = you flagged it as stuck.',
+    highlight: '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>Tap any dot to jump directly to that step</span>',
+    btnLabel: 'Next',
+    spotlight: 'dotsNav'
+  },
+  {
+    icon: '✅',
+    title: 'Mark each step done to continue',
+    desc: 'Once you\'ve completed a step, hit the green button at the bottom of the card. This moves you to the next step automatically.',
+    highlight: '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="18" height="18"><polyline points="20 6 9 17 4 12"/></svg><span>Look for the button at the bottom-right of each step</span>',
+    btnLabel: 'Next',
+    spotlight: null
+  },
+  {
+    icon: '🆘',
+    title: 'Stuck? There\'s a button for that',
+    desc: 'If something isn\'t working, tap "I\'m stuck" to expand a help panel with guidance — and a direct link to IT support if needed.',
+    highlight: '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Never retry a password more than 3 times — contact IT instead</span>',
+    btnLabel: 'Start setup',
+    spotlight: null
+  }
+];
+
+let tutCurrent = 0;
+const TUTORIAL_KEY = 'bupa_onboarding_tutorial_done';
+
+function initTutorial() {
+  if (localStorage.getItem(TUTORIAL_KEY)) {
+    document.getElementById('tutorialOverlay').classList.add('hidden');
+    return;
+  }
+  renderTutStep(0);
+}
+
+function renderTutStep(idx) {
+  const s = tutSteps[idx];
+  const total = tutSteps.length;
+
+  document.getElementById('tutIcon').textContent = s.icon;
+  document.getElementById('tutTitle').textContent = s.title;
+  document.getElementById('tutDesc').textContent = s.desc;
+  document.getElementById('tutHighlight').innerHTML = s.highlight;
+  document.getElementById('tutNextBtn').innerHTML = s.btnLabel + ' <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="16" height="16"><polyline points="9 18 15 12 9 6"/></svg>';
+
+  // dots
+  const dotsEl = document.getElementById('tutDots');
+  dotsEl.innerHTML = '';
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('div');
+    d.className = 'tut-dot' + (i < idx ? ' past' : i === idx ? ' active' : '');
+    dotsEl.appendChild(d);
+  }
+
+  // spotlight
+  clearSpotlight();
+  if (s.spotlight) {
+    const target = document.getElementById(s.spotlight);
+    if (target) showSpotlight(target);
+  }
+}
+
+function nextTutStep() {
+  tutCurrent++;
+  if (tutCurrent >= tutSteps.length) {
+    completeTutorial();
+  } else {
+    renderTutStep(tutCurrent);
+  }
+}
+
+function skipTutorial() {
+  completeTutorial();
+}
+
+function completeTutorial() {
+  localStorage.setItem(TUTORIAL_KEY, '1');
+  const overlay = document.getElementById('tutorialOverlay');
+  overlay.style.opacity = '0';
+  overlay.style.transition = 'opacity 0.3s';
+  clearSpotlight();
+  setTimeout(() => overlay.classList.add('hidden'), 300);
+}
+
+function showSpotlight(el) {
+  const ring = document.getElementById('spotlightRing');
+  const rect = el.getBoundingClientRect();
+  const pad = 6;
+  ring.style.top    = (rect.top  - pad + window.scrollY) + 'px';
+  ring.style.left   = (rect.left - pad + window.scrollX) + 'px';
+  ring.style.width  = (rect.width  + pad*2) + 'px';
+  ring.style.height = (rect.height + pad*2) + 'px';
+  ring.classList.add('visible');
+}
+
+function clearSpotlight() {
+  document.getElementById('spotlightRing').classList.remove('visible');
+}
+
+initTutorial();
 </script>
 </body>
 </html>
